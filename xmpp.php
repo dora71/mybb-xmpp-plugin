@@ -90,7 +90,7 @@ function xmpp_install(){
 	    ),'my_xmpp_thread2muc' => array(
 	        'title' => 'Neue Themen als Benachrichtigung in einen MUC?',
 	        'description' => 'Soll bei neuen Themen eine Gruppe oder eine Einzelperson benachrichtigt werden?',
-	        'optionscode' => 'select\n1=MUC\n0=Einzelperson',
+	        'optionscode' => "select\n1=MUC\n0=Einzelperson",
 	        'disporder' => 9
 	    )
 		);
