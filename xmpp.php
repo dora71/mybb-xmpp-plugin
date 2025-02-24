@@ -37,9 +37,9 @@ function xmpp_install(){
 
 	$setting_group = array(
 	    'name' => 'my_xmpp_settings',
-	    'title' => 'XMPP Benachrichtigungen',
-	    'description' => 'Einstellungen fuer das XMPP Benachrichtigungs Plugin',
-	    'disporder' => 9,
+	    'title' => 'XMPP Benachrichtigungseinstellungen',
+	    'description' => 'XMPP Benachrichtigungs Plugin',
+	    'disporder' => 1,
 	    'isdefault' => 0
 	);
 
