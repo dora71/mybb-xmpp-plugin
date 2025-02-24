@@ -81,9 +81,9 @@ function xmpp_install(){
 	        'title' => 'Benachrichtigung bei neuem Thema?',
 	        'description' => 'Falls aktiviert, werden Nachrichten bei Erstellung eines neuen Themas versendet',
 	        'optionscode' => 'yesno',
-	        'title' => 'Sicherheitsbenachrichtigungen aktivieren?',
 	        'disporder' => 7
 	    ),'my_xmpp_security_status' => array(
+	    	  'title' => 'Sicherheitsbenachrichtigungen aktivieren?',
 	        'description' => 'Benachrichtigung bei Zutritt zum AdminCP oder MOD CP',
 	        'optionscode' => 'yesno',
 	        'disporder' => 8
