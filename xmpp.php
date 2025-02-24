@@ -22,7 +22,7 @@ function xmpp_info(){
 	return array(
 		'name'				=> 'XMPP Benachrichtigungen',
 		'description'		=> 'Werde ueber die neuesten Nachrichten Deines Forums per XMPP informiert',
-		'author'				=> 'Rainer Dohmen',
+		'author'				=> 'dora71',
 		'version'			=> '1.0',
 		'guid'				=> '',
 		'codename' 			=> 'xmpp',
