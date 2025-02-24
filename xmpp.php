@@ -15,7 +15,6 @@ if(!defined('IN_MYBB'))
 $plugins->add_hook('datahandler_login_complete_end', 'my_login_notifications');
 $plugins->add_hook('newthread_do_newthread_end','my_thread_notifications');
 $plugins->add_hook('member_do_register_end','my_signup_notifications');
-$plugins->add_hook('admin_load','my_token_warning');
 $plugins->add_hook('admin_load','my_adminpanel_notifications');
 $plugins->add_hook('modcp_end','my_modcp_notifications');
 
@@ -27,8 +26,8 @@ function xmpp_info(){
 		'version'			=> '1.0',
 		'guid'				=> '',
 		'codename' 			=> 'xmpp',
-		'compatibility'	=> '*',
-		'website'			=>	'',
+		'compatibility'	=> '18*',
+		'website'			=>	'https://github.com/dora71/mybb-xmpp-plugin',
 		'authorsite'		=>	''
 		);
 }
