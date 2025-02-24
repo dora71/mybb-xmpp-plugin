@@ -51,46 +51,55 @@ function xmpp_install(){
 	        'title' => 'XMPP Senderadresse',
 	        'description' => 'Absenderadresse, von der aus Benachrichtigungen verschickt werden sollen',
 	        'optionscode' => 'text',
+	        'value' => 'absender@meinserver.tld',
 	        'disporder' => 1
 	    ),'my_xmpp_passwd' => array(
 	        'title' => 'Passwort für die Absenderadresse',
 	        'description' => "Konto sollte ausschliesslich für das MyBB Forum angelegt werden",
 	        'optionscode' => 'text',
+	        'value' => 'topsecret',
 	        'disporder' => 2
 	    ),'my_xmpp_chat' => array(
 	        'title' => 'XMPP Empfaenger',
 	        'description' => "Adresse des Benachrichtigungsempfaengers",
 	        'optionscode' => 'text',
+	        'value' => 'empfaenger@server.tld',
 	        'disporder' => 3
 	    ),'my_xmpp_muc' => array(
 	        'title' => 'XMPP Empfaengergruppe',
 	        'description' => "Adresse der Gruppe, welche die Benachrichtigungen erhalten soll (MUC)",
 	        'optionscode' => 'text',
+	        'value' => 'gruppe@conference.server.tld',
 	        'disporder' => 4
 	    ),'my_xmpp_login_status' => array(
 	        'title' => 'Benachrichtigung beim Login erhalten?',
 	        'description' => 'Falls aktiviert, werden Nachrichten bei jedem Login versendet',
 	        'optionscode' => 'yesno',
+	        'value' => 1,
 	        'disporder' => 5
 	    ),'my_xmpp_signup_status' => array(
 	        'title' => 'Benachrichtigung bei Registrierung erhalten?',
 	        'description' => 'Falls aktiviert, werden Nachrichten bei Neuregistrierung versendet',
 	        'optionscode' => 'yesno',
+	        'value' => 1,
 	        'disporder' => 6
 	    ),'my_xmpp_thread_status' => array(
 	        'title' => 'Benachrichtigung bei neuem Thema?',
 	        'description' => 'Falls aktiviert, werden Nachrichten bei Erstellung eines neuen Themas versendet',
 	        'optionscode' => 'yesno',
+	        'value' => 1,
 	        'disporder' => 7
 	    ),'my_xmpp_security_status' => array(
 	    	  'title' => 'Sicherheitsbenachrichtigungen aktivieren?',
 	        'description' => 'Benachrichtigung bei Zutritt zum AdminCP oder MOD CP',
 	        'optionscode' => 'yesno',
+	        'value' => 1,
 	        'disporder' => 8
 	    ),'my_xmpp_thread2muc' => array(
 	        'title' => 'Neue Themen als Benachrichtigung in einen MUC?',
 	        'description' => 'Soll bei neuen Themen eine Gruppe oder eine Einzelperson benachrichtigt werden?',
-	        'optionscode' => "select\n1=MUC\n0=Einzelperson",
+	        'optionscode' => "select\n0=Einzelperson\n1=MUC",
+	        'value' => 0,
 	        'disporder' => 9
 	    )
 		);
