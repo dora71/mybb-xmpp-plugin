@@ -183,7 +183,7 @@ function my_adminpanel_notifications(){
 }
 function my_modcp_notifications(){
 	global $mybb;
-	if(!$mybb->settings['xmpp_security_status']){return FALSE;}
+	if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
 	if(!$_COOKIE['ModcpReached']){
 		$modcp_message = "Erfolgreicher Login ins ModCP von IP ".$_SERVER['REMOTE_ADDR']."\n\n".$mybb->settings['bburl'];
 		setcookie('ModcpReached', 1, time()+3600);
