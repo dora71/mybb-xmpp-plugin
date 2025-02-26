@@ -154,7 +154,7 @@ function my_login_notifications($obj){
 	global $mybb;
 	if(!$mybb->settings['my_xmpp_login_status']){return FALSE;}
 	$data = get_object_vars($obj);
-	$login_message = "Benutzer ".$data['login_data']['username']." hat sich ins Forum eingeloggt\n\n".$mybb->settings['bburl'];
+	$login_message = "Benutzer ".$data['login_data']['username']." hat sich ins Forum eingeloggt\n".$mybb->settings['bburl'];
 	/** Senderoutine mit Nachricht $login_message **/
 	sendXMPPMsg($login_message,0);
 }
@@ -188,7 +188,7 @@ function my_adminpanel_notifications(){
 	global $mybb;
 	if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
 	if(!$_COOKIE['AdminpanelReached']){
-		$adminpanel_message = "Erfolgreicher Login ins Admin Panel von IP ".$_SERVER['REMOTE_ADDR']."\n\n".$mybb->settings['bburl'];
+		$adminpanel_message = "Erfolgreicher Login ins Admin Panel von IP ".$_SERVER['REMOTE_ADDR']."\n".$mybb->settings['bburl'];
 		setcookie('AdminpanelReached', 1, time()+3600);
 		/** Senderoutine mit $adminpanel_message **/
 		sendXMPPMsg($adminpanel_message,0);
@@ -198,7 +198,7 @@ function my_modcp_notifications(){
 	global $mybb;
 	if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
 	if(!$_COOKIE['ModcpReached']){
-		$modcp_message = "Erfolgreicher Login ins Mod-CP von IP ".$_SERVER['REMOTE_ADDR']."\n\n".$mybb->settings['bburl'];
+		$modcp_message = "Erfolgreicher Login ins Mod-CP von IP ".$_SERVER['REMOTE_ADDR']."\n".$mybb->settings['bburl'];
 		setcookie('ModcpReached', 1, time()+3600);
 		/** Senderoutine mit $modcp_message **/
 		sendXMPPMsg($modcp_message,0);
