@@ -17,7 +17,7 @@ $plugins->add_hook('newthread_do_newthread_end','my_thread_notifications');
 $plugins->add_hook('member_do_register_end','my_signup_notifications');
 $plugins->add_hook('admin_load','my_adminpanel_notifications');
 $plugins->add_hook('modcp_end','my_modcp_notifications');
-$plugins->add_hook('calendar_addevent_end','my_calendar_notifications');
+$plugins->add_hook('calendar_do_addevent_end','my_calendar_notifications');
 
 function xmpp_info(){
 	return array(
@@ -213,7 +213,7 @@ function my_calendar_notifications(){
 	if ($LastEvent['private'] == 1){return FALSE;}
 	$UserQuery = $db->query("SELECT username FROM ".TABLE_PREFIX."users WHERE uid=".$LastEvent['uid']);
 	$LastUser = $db->fetch_array($UserQuery);
-	$event_message = "Ein neuer Kalendereintrag mit dem Titel ".$LastEvent['name']." wurde von ".$LastUser['username']." erstellt unter:\n".$mybb->settings['bburl']."/calendar.php?action=event&eid=".$LastEvent['eid'];
+	$event_message = "Ein Kalendereintrag mit dem Titel\n*".$LastEvent['name']."* wurde von ".$LastUser['username']." erstellt:\n".$mybb->settings['bburl']."/calendar.php?action=event&eid=".$LastEvent['eid'];
 	if($mybb->settings['my_xmpp_thread2muc'] == 1) {
 		/** Senderoutine mit $thread_message in MUC **/
 		sendXMPPMsg($event_message,1);
