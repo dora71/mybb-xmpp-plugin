@@ -208,7 +208,7 @@ function my_modcp_notifications(){
 function my_calendar_notifications(){
 	global $db,$mybb;
 	if(!$mybb->settings['my_xmpp_calendar_status']){return FALSE;}
-	$EventQuery = $db->query("SELECT uid,name,private FROM ".TABLE_PREFIX."events ORDER BY eid DESC LIMIT 1");
+	$EventQuery = $db->query("SELECT uid,eid,name,private FROM ".TABLE_PREFIX."events ORDER BY eid DESC LIMIT 1");
 	$LastEvent = $db->fetch_array($EventQuery);
 	if ($LastEvent['private'] == 1){return FALSE;}
 	$UserQuery = $db->query("SELECT username FROM ".TABLE_PREFIX."users WHERE uid=".$LastEvent['uid']);
