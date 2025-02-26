@@ -91,7 +91,7 @@ function xmpp_install(){
 	        'disporder' => 7
 	    ),'my_xmpp_security_status' => array(
 	    	  'title' => 'Sicherheitsbenachrichtigungen aktivieren?',
-	        'description' => 'Benachrichtigung bei Zutritt zum AdminCP oder MOD CP',
+	        'description' => 'Benachrichtigung bei Zutritt zum AdminCP oder ModCP',
 	        'optionscode' => 'yesno',
 	        'value' => 1,
 	        'disporder' => 8
@@ -185,7 +185,7 @@ function my_modcp_notifications(){
 	global $mybb;
 	if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
 	if(!$_COOKIE['ModcpReached']){
-		$modcp_message = "Erfolgreicher Login ins ModCP von IP ".$_SERVER['REMOTE_ADDR']."\n\n".$mybb->settings['bburl'];
+		$modcp_message = "Erfolgreicher Login ins Mod-CP von IP ".$_SERVER['REMOTE_ADDR']."\n\n".$mybb->settings['bburl'];
 		setcookie('ModcpReached', 1, time()+3600);
 		/** Senderoutine mit $modcp_message **/
 		sendXMPPMsg($modcp_message,0);
@@ -199,12 +199,12 @@ function sendXMPPMsg($msg,$muc) {
 	$target = $mybb->settings['my_xmpp_chat'];
 	$targetmuc = $mybb->settings['my_xmpp_muc'];
 	if($muc == 0) {
-		$command = 'echo -e "'.$msg.'" | /usr/bin/go-sendxmpp -u '.$sender.' -p '.$pass.' '.$target;
-		exec($command);
+		$command = 'echo "'.$msg.'" | /usr/bin/go-sendxmpp -u '.$sender.' -p '.$pass.' '.$target;
+		exec($command, $output, $retval);
 	}
 	elseif($muc == 1) {
-		$command = 'echo -e "'.$msg.'" | /usr/bin/go-sendxmpp -c -u '.$sender.' -p '.$pass.' '.$targetmuc;
-		exec($command);
+		$command = 'echo "'.$msg.'" | /usr/bin/go-sendxmpp -c -u '.$sender.' -p '.$pass.' '.$targetmuc;
+		exec($command, $output, $retval);
 	}
 }
 
