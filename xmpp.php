@@ -71,6 +71,12 @@ function xmpp_install(){
 	        'optionscode' => 'text',
 	        'value' => 'gruppe@conference.server.tld',
 	        'disporder' => 4
+	    ),'my_xmpp_muc_alias' => array(
+	        'title' => 'Aliasname',
+	        'description' => "Welcher Absendername soll in der Gruppe erscheinen?",
+	        'optionscode' => 'text',
+	        'value' => 'BoardAdmin',
+	        'disporder' => 4	        
 	    ),'my_xmpp_login_status' => array(
 	        'title' => 'Benachrichtigung beim Login erhalten?',
 	        'description' => 'Falls aktiviert, werden Nachrichten bei jedem Login versendet',
@@ -198,12 +204,13 @@ function sendXMPPMsg($msg,$muc) {
 	$pass = $mybb->settings['my_xmpp_passwd'];
 	$target = $mybb->settings['my_xmpp_chat'];
 	$targetmuc = $mybb->settings['my_xmpp_muc'];
+	$alias = $mybb->settings['my_xmpp_muc_alias'];
 	if($muc == 0) {
 		$command = 'echo "'.$msg.'" | /usr/bin/go-sendxmpp -u '.$sender.' -p '.$pass.' '.$target;
 		exec($command, $output, $retval);
 	}
 	elseif($muc == 1) {
-		$command = 'echo "'.$msg.'" | /usr/bin/go-sendxmpp -c -u '.$sender.' -p '.$pass.' '.$targetmuc;
+		$command = 'echo "'.$msg.'" | /usr/bin/go-sendxmpp -c -a '.$alias.' -u '.$sender.' -p '.$pass.' '.$targetmuc;
 		exec($command, $output, $retval);
 	}
 }
