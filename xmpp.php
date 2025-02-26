@@ -135,7 +135,7 @@ function xmpp_is_installed()
 function xmpp_uninstall()
 {
 	global $db;
-	$db->delete_query('settings', "name IN ('my_xmpp_sender','my_xmpp_passwd','my_xmpp_chat','my_xmpp_muc','my_xmpp_signup_status','my_xmpp_login_status','my_xmpp_thread_status','my_xmpp_security_status','my_xmpp_thread2muc')");
+	$db->delete_query('settings', "name IN ('my_xmpp_sender','my_xmpp_passwd','my_xmpp_chat','my_xmpp_muc','my_xmpp_muc_alias','my_xmpp_signup_status','my_xmpp_login_status','my_xmpp_thread_status','my_xmpp_security_status','my_xmpp_thread2muc')");
 	$db->delete_query('settinggroups', "name = 'my_xmpp_settings'");
 	rebuild_settings();
 }
