@@ -21,7 +21,7 @@ $plugins->add_hook('modcp_end','my_modcp_notifications');
 function xmpp_info(){
 	return array(
 		'name'				=> 'XMPP Benachrichtigungen',
-		'description'		=> 'Werde ueber die neuesten Nachrichten Deines Forums per XMPP informiert',
+		'description'		=> 'Werde über die neuesten Nachrichten Deines Forums per XMPP informiert',
 		'author'				=> 'dora71',
 		'version'			=> '1.0',
 		'guid'				=> '',
@@ -60,8 +60,8 @@ function xmpp_install(){
 	        'value' => 'topsecret',
 	        'disporder' => 2
 	    ),'my_xmpp_chat' => array(
-	        'title' => 'XMPP Empfaenger',
-	        'description' => "Adresse des Benachrichtigungsempfaengers",
+	        'title' => 'XMPP Empfänger',
+	        'description' => "Adresse des Benachrichtigungsempfängers",
 	        'optionscode' => 'text',
 	        'value' => 'empfaenger@server.tld',
 	        'disporder' => 3
