@@ -17,6 +17,7 @@ $plugins->add_hook('newthread_do_newthread_end','my_thread_notifications');
 $plugins->add_hook('member_do_register_end','my_signup_notifications');
 $plugins->add_hook('admin_load','my_adminpanel_notifications');
 $plugins->add_hook('modcp_end','my_modcp_notifications');
+$plugins->add_hook('calendar_addevent_end','my_calendar_notifications');
 
 function xmpp_info(){
 	return array(
@@ -95,6 +96,12 @@ function xmpp_install(){
 	        'optionscode' => 'yesno',
 	        'value' => 1,
 	        'disporder' => 7
+	    ),'my_xmpp_calendar_status' => array(
+	        'title' => 'Benachrichtigung bei neuem Kalendereintrag?',
+	        'description' => 'Falls aktiviert, werden Nachrichten bei einem neuen Kalendereintrag versendet',
+	        'optionscode' => 'yesno',
+	        'value' => 1,
+	        'disporder' => 7	        
 	    ),'my_xmpp_security_status' => array(
 	    	  'title' => 'Sicherheitsbenachrichtigungen aktivieren?',
 	        'description' => 'Benachrichtigung bei Zutritt zum AdminCP oder ModCP',
@@ -135,7 +142,7 @@ function xmpp_is_installed()
 function xmpp_uninstall()
 {
 	global $db;
-	$db->delete_query('settings', "name IN ('my_xmpp_sender','my_xmpp_passwd','my_xmpp_chat','my_xmpp_muc','my_xmpp_muc_alias','my_xmpp_signup_status','my_xmpp_login_status','my_xmpp_thread_status','my_xmpp_security_status','my_xmpp_thread2muc')");
+	$db->delete_query('settings', "name IN ('my_xmpp_sender','my_xmpp_passwd','my_xmpp_chat','my_xmpp_muc','my_xmpp_muc_alias','my_xmpp_signup_status','my_xmpp_login_status','my_xmpp_thread_status','my_xmpp_security_status','my_xmpp_thread2muc','my_xmpp_calendar_status')");
 	$db->delete_query('settinggroups', "name = 'my_xmpp_settings'");
 	rebuild_settings();
 }
@@ -195,6 +202,24 @@ function my_modcp_notifications(){
 		setcookie('ModcpReached', 1, time()+3600);
 		/** Senderoutine mit $modcp_message **/
 		sendXMPPMsg($modcp_message,0);
+	}
+}
+
+function my_calendar_notifications(){
+	global $db,$mybb;
+	if(!$mybb->settings['my_xmpp_calendar_status']){return FALSE;}
+	$EventQuery = $db->query("SELECT uid,name,private FROM ".TABLE_PREFIX."events ORDER BY eid DESC LIMIT 1");
+	$LastEvent = $db->fetch_array($EventQuery);
+	if ($LastEvent['private'] == 1){return FALSE;}
+	$UserQuery = $db->query("SELECT username FROM ".TABLE_PREFIX."users WHERE uid=".$LastEvent['uid']);
+	$LastUser = $db->fetch_array($UserQuery);
+	$event_message = "Ein neuer Kalendereintrag mit dem Titel ".$LastEvent['name']." wurde von ".$LastUser['username']." erstellt unter:\n".$mybb->settings['bburl']."/calendar.php?action=event&eid=".$LastEvent['eid'];
+	if($mybb->settings['my_xmpp_thread2muc'] == 1) {
+		/** Senderoutine mit $thread_message in MUC **/
+		sendXMPPMsg($event_message,1);
+	} else {
+		/** Senderoutine mit $thread_message in Chat **/
+		sendXMPPMsg($event_message,0);
 	}
 }
 
