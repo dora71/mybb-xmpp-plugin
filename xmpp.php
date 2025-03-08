@@ -18,6 +18,7 @@ $plugins->add_hook('member_do_register_end','my_signup_notifications');
 $plugins->add_hook('admin_load','my_adminpanel_notifications');
 $plugins->add_hook('modcp_end','my_modcp_notifications');
 $plugins->add_hook('calendar_do_addevent_end','my_calendar_notifications');
+$plugins->add_hook('admin_login_success', 'my_adminpanel_enter_notifications');
 
 function xmpp_info(){
 	return array(
@@ -194,6 +195,20 @@ function my_adminpanel_notifications(){
 		sendXMPPMsg($adminpanel_message,0);
 	}
 }
+
+function my_adminpanel_enter_notifications()
+{
+    global $mybb;
+    date_default_timezone_set('Europe/Berlin');
+    // Benutzerinformationen
+    $uid = $mybb->user['uid'];
+    $username = $mybb->user['username'];
+    $ip_address = get_ip();
+    $time = date('H:i',TIME_NOW);
+    $adminentry_message = "Login in's AdminPanel von Benutzer ".$username." (UID: ".$uid.")\nIP: ".$ip_address."\num ".$time." Uhr.\n".$mybb->settings['bburl'];
+    sendXMPPMsg($adminentry_message,0);
+}
+
 function my_modcp_notifications(){
 	global $mybb;
 	if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
