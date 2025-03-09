@@ -15,15 +15,16 @@ if(!defined('IN_MYBB'))
 $plugins->add_hook('datahandler_login_complete_end', 'my_login_notifications');
 $plugins->add_hook('newthread_do_newthread_end','my_thread_notifications');
 $plugins->add_hook('member_do_register_end','my_signup_notifications');
-$plugins->add_hook('admin_load','my_adminpanel_notifications');
-$plugins->add_hook('modcp_end','my_modcp_notifications');
+//$plugins->add_hook('admin_load','my_adminpanel_notifications');
+//$plugins->add_hook('modcp_end','my_modcp_notifications');
 $plugins->add_hook('calendar_do_addevent_end','my_calendar_notifications');
 $plugins->add_hook('admin_login_success', 'my_adminpanel_enter_notifications');
+$plugins->add_hook('modcp_end','my_modcp_enter_notifications');
 
 function xmpp_info(){
 	return array(
 		'name'				=> 'XMPP Benachrichtigungen',
-		'description'		=> 'Werde über die neuesten Nachrichten Deines Forums per XMPP informiert',
+		'description'		=> 'Werde über die neuesten Ereignisse in Deinem Forum per XMPP informiert',
 		'author'				=> 'dora71',
 		'version'			=> '1.0',
 		'guid'				=> '',
@@ -199,13 +200,28 @@ function my_adminpanel_notifications(){
 function my_adminpanel_enter_notifications()
 {
     global $mybb;
-    date_default_timezone_set('Europe/Berlin');
+    if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
+    date_default_timezone_set('Europe/Berlin');    
     // Benutzerinformationen
     $uid = $mybb->user['uid'];
     $username = $mybb->user['username'];
     $ip_address = get_ip();
     $time = date('H:i',TIME_NOW);
-    $adminentry_message = "Login in's AdminPanel von Benutzer ".$username." (UID: ".$uid.")\nIP: ".$ip_address."\num ".$time." Uhr.\n".$mybb->settings['bburl'];
+    $adminentry_message = "Login in's AdminPanel von Benutzer ".$username." (UID: ".$uid.")\nIP: ".$ip_address."\num ".$time." Uhr\n".$mybb->settings['bburl'];
+    sendXMPPMsg($adminentry_message,0);
+}
+
+function my_modcp_enter_notifications()
+{
+    global $mybb;
+    if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
+    date_default_timezone_set('Europe/Berlin');    
+    // Benutzerinformationen
+    $uid = $mybb->user['uid'];
+    $username = $mybb->user['username'];
+    $ip_address = get_ip();
+    $time = date('H:i',TIME_NOW);
+    $adminentry_message = "Login in's ModCP von Benutzer ".$username." (UID: ".$uid.")\nIP: ".$ip_address."\num ".$time." Uhr\n".$mybb->settings['bburl'];
     sendXMPPMsg($adminentry_message,0);
 }
 
@@ -213,7 +229,10 @@ function my_modcp_notifications(){
 	global $mybb;
 	if(!$mybb->settings['my_xmpp_security_status']){return FALSE;}
 	if(!$_COOKIE['ModcpReached']){
-		$modcp_message = "Erfolgreicher Login ins Mod-CP von IP ".$_SERVER['REMOTE_ADDR']."\n".$mybb->settings['bburl'];
+		date_default_timezone_set('Europe/Berlin');
+      $time = date('H:i',TIME_NOW);
+      $ip_address = get_ip();
+		$modcp_message = "Erfolgreicher Login ins Mod-CP\nIP: ".$ip_address."\num: ".$time." Uhr\n".$mybb->settings['bburl'];
 		setcookie('ModcpReached', 1, time()+3600);
 		/** Senderoutine mit $modcp_message **/
 		sendXMPPMsg($modcp_message,0);
