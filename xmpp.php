@@ -164,7 +164,7 @@ function my_thread_notifications(){
 	if(!$mybb->settings['my_xmpp_thread_status']){return FALSE;}
 	$ThreadQuery = $db->query("SELECT subject,username,tid FROM ".TABLE_PREFIX."threads ORDER BY tid DESC LIMIT 1");
 	$LastThread = $db->fetch_array($ThreadQuery);
-	$thread_message = "Ein neues Thema mit dem Titel ".$LastThread['subject']." wurde von ".$LastThread['username']." begonnen.\n".$mybb->settings['bburl']."/showthread.php?tid=".$LastThread['tid'];
+	$thread_message = "Ein neues Thema mit dem Titel\n*".$LastThread['subject']."*\nwurde von ".$LastThread['username']." begonnen.\n".$mybb->settings['bburl']."/showthread.php?tid=".$LastThread['tid'];
 	if($mybb->settings['my_xmpp_thread2muc'] == 1) {
 		/** Senderoutine mit $thread_message in MUC **/
 		sendXMPPMsg($thread_message,1);
